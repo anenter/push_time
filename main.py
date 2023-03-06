@@ -189,15 +189,15 @@ def lizhi():
 def tip():
     if (Whether_tip!=False):
         try:
-            conn = http.client.HTTPSConnection('api.tianapi.com')  #接口域名
+            conn = http.client.HTTPSConnection('apis.tianapi.com')  #接口域名
             params = urllib.parse.urlencode({'key':tianxing_API,'city':city})
             headers = {'Content-type':'application/x-www-form-urlencoded'}
             conn.request('POST','/tianqi/index',params,headers)
             res = conn.getresponse()
             data = res.read()
             data = json.loads(data)
-            pop = data["newslist"][0]["pop"]
-            tips = data["newslist"][0]["tips"]
+            pop = data["result"]["pcpn"]
+            tips = data["result"]["tips"]
             return pop,tips
         except:
             return ("天气预报API调取错误，请检查API是否正确申请或是否填写正确"),""
