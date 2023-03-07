@@ -203,7 +203,7 @@ def tip():
             return ("天气预报API调取错误，请检查API是否正确申请或是否填写正确"),""
 
 #推送信息
-def send_message(to_user, access_token, city_name, weather, max_temperature, min_temperature, pipi, lizhi, pop, tips, note_en, note_ch, health_tip, lucky_):
+def send_message(to_user, access_token, province_name, city_name, weather, max_temperature, min_temperature, pipi, lizhi, pop, tips, note_en, note_ch, health_tip, lucky_):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
     week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
     year = localtime().tm_year
@@ -218,6 +218,15 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
     love_date = date(love_year, love_month, love_day)
     # 获取在一起的日期差
     love_days = str(today.__sub__(love_date)).split(" ")[0]
+    
+    # 获取在一起的日子的日期格式
+    card_year = int(config["card_date"].split("-")[0])
+    card_month = int(config["card_date"].split("-")[1])
+    card_day = int(config["card_date"].split("-")[2])
+    card_date = date(card_year, card_month, card_day)
+    # 获取在一起的日期差
+    card_days = str(today.__sub__(card_date)).split(" ")[0]
+    
     # 获取所有生日数据
     birthdays = {}
     for k, v in config.items():
@@ -237,6 +246,10 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
                 "value": city_name,
                 "color": get_color()
             },
+            "province": {
+                "value": province_name,
+                "color": get_color()
+            },
             "weather": {
                 "value": weather,
                 "color": get_color()
@@ -251,6 +264,10 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
             },
             "love_day": {
                 "value": love_days,
+                "color": get_color()
+            },
+            "card_day": {
+                "value": card_days,
                 "color": get_color()
             },
             "note_en": {
@@ -366,7 +383,7 @@ if __name__ == "__main__":
     lucky_ = lucky()
     # 公众号推送消息
     for user in users:
-        send_message(user, accessToken, city, weather, max_temperature, min_temperature, pipi, lizhi,pop,tips, note_en, note_ch, health_tip, lucky_)
+        send_message(user, accessToken, province, city, weather, max_temperature, min_temperature, pipi, lizhi,pop,tips, note_en, note_ch, health_tip, lucky_)
     import time
     time_duration = 3.5
     time.sleep(time_duration)
