@@ -219,13 +219,21 @@ def send_message(to_user, access_token, province_name, city_name, weather, max_t
     # 获取在一起的日期差
     love_days = str(today.__sub__(love_date)).split(" ")[0]
     
-    # 获取在一起的日子的日期格式
+    # 获取领证的日子的日期格式
     card_year = int(config["card_date"].split("-")[0])
     card_month = int(config["card_date"].split("-")[1])
     card_day = int(config["card_date"].split("-")[2])
     card_date = date(card_year, card_month, card_day)
-    # 获取在一起的日期差
+    # 获取领证的日期差
     card_days = str(today.__sub__(card_date)).split(" ")[0]
+    
+    # 获取结婚的日子的日期格式
+    marry_year = int(config["marry_date"].split("-")[0])
+    marry_month = int(config["marry_date"].split("-")[1])
+    marry_day = int(config["marry_date"].split("-")[2])
+    marry_date = date(marry_year, marry_month, marry_day)
+    # 获取结婚的日期差
+    marry_days = str(today.__sub__(marry_date)).split(" ")[0]
     
     # 获取所有生日数据
     birthdays = {}
@@ -268,6 +276,10 @@ def send_message(to_user, access_token, province_name, city_name, weather, max_t
             },
             "card_day": {
                 "value": card_days,
+                "color": get_color()
+            },
+            "marry_day": {
+                "value": marry_days,
                 "color": get_color()
             },
             "note_en": {
