@@ -196,6 +196,7 @@ def tip():
             res = conn.getresponse()
             data = res.read()
             data = json.loads(data)
+            #接口没降雨概率了 改成风力
             pop = data["newslist"][0]["windsc"]
             tips = data["newslist"][0]["tips"]
             return pop,tips
